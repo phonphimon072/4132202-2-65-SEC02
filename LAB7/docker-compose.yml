@@ -1,0 +1,28 @@
+version: '3'
+
+services: 
+    www:
+        build: .
+        ports: 
+            - 8000:80
+        volumes: 
+            - ./www:/var/www/html
+        networks: 
+            - default
+        links: 
+            - db
+    db: 
+        image: mysql
+        ports: 
+            - 3306:3306
+        environment: 
+            MYSQL_DATABASE: Class_room
+            MYSQL_ROOT_PASSWORD: test
+        networks: 
+            - default
+    myadmin:
+        image: phpmyadmin/phpmyadmin
+        ports: 
+            - 8100:80
+        links: 
+            - db:db
